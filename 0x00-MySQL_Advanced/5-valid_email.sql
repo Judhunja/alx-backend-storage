@@ -3,7 +3,7 @@ DELIMITER $$
 CREATE TRIGGER reset_email BEFORE UPDATE ON users
 FOR EACH ROW
 BEGIN
-    IF NEW.email REGEXP '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,4}$' THEN        
+    IF NEW.email REGEXP '^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,4}$' THEN        
         SET NEW.valid_email = 1;
     ELSE
         SET NEW.valid_email = 0;
