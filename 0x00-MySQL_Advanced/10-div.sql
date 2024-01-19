@@ -1,3 +1,4 @@
+-- returns a divided by b
 DELIMITER $$
 CREATE FUNCTION SafeDiv(a INT, b INT)
 RETURNS FLOAT
