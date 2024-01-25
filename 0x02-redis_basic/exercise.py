@@ -39,7 +39,7 @@ class Cache:
 
     def get_int(self, key: str):
         """Return the value as int."""
-        return self.get(key, int)
+        return self.get(key, lambda x: int(x))
 
 
 cache = Cache()
