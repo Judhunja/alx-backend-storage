@@ -37,4 +37,4 @@ class Cache:
 
     def get_int(self, key: str):
         """Parametrizes get for ints"""
-        return self.get(key, lambda d: int(d))
+        return self.get(key, lambda b: int(b))
