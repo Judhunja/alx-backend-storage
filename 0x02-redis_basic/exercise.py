@@ -2,7 +2,7 @@
 """This module contains a class Cache"""
 
 import redis
-from typing import Union, Callable
+from typing import Union, Callable, Optional
 from uuid import uuid4
 
 
@@ -22,7 +22,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable[Union[str, bytes, int, float], Union[str, bytes, int, float]] = None) -> Union[str, bytes, int, float]:
+    def get(self, key: str, fn: Optional[Callable[Union[str, bytes, int, float], Union[str, bytes, int, float]]] = None) -> Union[str, bytes, int, float]:
         """Returns data belonging to a key in the desired format or None if the data doesn't exist"""
         data = self._redis.get(key)
 
@@ -37,4 +37,4 @@ class Cache:
 
     def get_int(self, key: str):
         """Parametrizes get for ints"""
-        return self.get(key, int(key))
+        return self.get(key, lambda d: int(d))
