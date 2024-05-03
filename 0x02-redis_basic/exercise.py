@@ -20,8 +20,8 @@ class Cache:
         """Counts the number of times methods of Cache class are called"""
         @wraps(method)
         def wrapper(self, *args, **kwargs):
-            return self._redis.incr(method.__qualname__, 1)
-
+            self._redis.incr(method.__qualname__, 1)
+            return method(self, *args, **kwargs)
         return wrapper
 
     @count_calls
