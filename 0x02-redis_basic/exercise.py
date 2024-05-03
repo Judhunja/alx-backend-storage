@@ -24,6 +24,20 @@ class Cache:
             return method(self, *args, **kwargs)
         return wrapper
 
+    @staticmethod
+    def call_history(method: Callable) -> Callable:
+        """Stores inputs and outputs for a particular function"""
+        @wraps(method)
+        def wrapper(self, *args, **kwargs):
+            keyin = f"{method.__qualname__}:inputs"
+            self._redis.rpush(keyin, str(args))
+            result = method(self, *args, **kwargs)
+            keyout = f"{method.__qualname__}:outputs"
+            self._redis.rpush(keyout, str(result))
+            return result
+        return wrapper
+
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """generates a random key and stores the input data using the key and
